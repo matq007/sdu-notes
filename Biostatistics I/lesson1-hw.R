@@ -1,45 +1,67 @@
 setwd("~/School/SDU/Biostatistics I/")
 
 # Exercise 1.1
-my.data <- read.table("DataTable.csv", fill = TRUE, header = TRUE, sep = "\t", row.names = 1)
+my.data <- read.table("DataTable.csv", fill = TRUE, header = TRUE, sep = "\t", skip = 1)
+
+# Check if the row and col names were set and if the data are not empty
+if (length(rownames(my.data)) > 0 & length(colnames(my.data)) > 0 & length(my.data) > 0) {
+  print("Everything was set correctly")
+} else {
+  print("Something went wrong")
+}
+
+# Number of empty values in cols
+for (col in colnames(my.data)) {
+  n <- sum(is.na(my.data[col]))
+  print(sprintf("[%s] -> %d", col, n))
+}
+
+# Number of empty values in rows
+for (row in 1:nrow(my.data)) {
+  m <- sum(is.na(my.data[row,]))
+  print(sprintf("[%d] -> %d", row, m))
+}
 
 # Exercise 1.2
-# install.packages("MASS")
-# library("MASS")
+install.packages("MASS")
+library(MASS)
+data("Pima.tr2")
+dim(Pima.tr2)
 
-# data("Pima.tr2")
-# dim(my.data)
-# table()
+# Number of empty values in cols
+for (col in colnames(Pima.tr2)) {
+  n <- sum(is.na(Pima.tr2[col]))
+  print(sprintf("[%s] -> %d", col, n))
+}
 
-# n <- count.fields("DataTable.csv", blank.lines.skip = FALSE)
-# x <- readLines("DataTable.csv");
-# head(x[n] == 29)
+# Number of empty values in rows
+for (row in 1:nrow(Pima.tr2)) {
+  m <- sum(is.na(Pima.tr2[row,]))
+  print(sprintf("[%d] -> %d", row, m))
+}
 
-# my.data[2]
+# TODO: table()
 
-# n <- count.fields("DataTable.csv", sep = "\n", blank.lines.skip = FALSE)
-# sum(is.na(my.data[14]))
+# Exercise 1.3
+# Exercise 1.3.1
+mean(1:21)
+range(1:21)
 
-# EXERCISE 1
-sum(is.na(my.data))
+# Exercise 1.3.2
+mean(rnorm(50, 0, sd = 1))
+range(rnorm(50, 0, sd = 1))
 
-library("MASS")
-sum(is.na(Pima.tr2))
+mean(women$height)
+range(women$height)
 
-colSums(is.na(Pima.tr2))
-rowSums(is.na(Pima.tr2))
+# Exercise 1.4
+median(1:21)
+sum(1:21)
+sd(1:21)
 
-table(Pima.tr2$npreg)
-table(rowSums(is.na(Pima.tr2)))
-
-# colnames(my.data)
-
-# for (i in colnames(my.data)) {
-  #m <- sum(is.na(my.data[i]))
-  #print(cat(sprintf("[%s] -> [%d]", i, m)))
-#}
-
-
-# Normal distribution
-rnorm(50)
-mean(rnorm(10000000))
+# Exercise 1.5
+library(MASS)
+data("mammals")
+plot(mammals$body~mammals$brain)
+plot(mammals$brain, mammals$body)
+plot(log(mammals$body)~log(mammals$brain))
