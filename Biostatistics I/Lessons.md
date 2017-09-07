@@ -43,7 +43,8 @@ dataTable = read.table("DataTable.csv", sep = "\t", header = TRUE, fill = TRUE, 
 
 ### Look into
 
-- normalization
+- normal distribution
+- standart derivation
 - basics of statistics
 
 
