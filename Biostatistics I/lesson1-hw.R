@@ -15,12 +15,14 @@ for (col in colnames(my.data)) {
   n <- sum(is.na(my.data[col]))
   print(sprintf("[%s] -> %d", col, n))
 }
+colSums(is.na(my.data)) # other way
 
 # Number of empty values in rows
 for (row in 1:nrow(my.data)) {
   m <- sum(is.na(my.data[row,]))
   print(sprintf("[%d] -> %d", row, m))
 }
+rowSums(is.na(my.data)) # other way
 
 # Exercise 1.2
 install.packages("MASS")
@@ -63,5 +65,21 @@ sd(1:21)
 library(MASS)
 data("mammals")
 plot(mammals$body~mammals$brain)
+plot(mammals$body, mammals$brain)
 plot(mammals$brain, mammals$body)
-plot(log(mammals$body)~log(mammals$brain))
+plot(log(mammals$body), log(mammals$brain))
+plot(log="xy", mammals$body, mammals$brain)
+
+# Exercise 1.6
+# See pictures/exercise-1.6
+# xlim, ylim
+plot(trees)
+plot(range(trees$Girth), c(min(range(trees$Height), range(trees$Volume)), max(range(trees$Height), range(trees$Volume))), xlab = "Gifrth", ylab = "Range", type = "n")
+lines(trees$Girth, trees$Height, col = "red")
+lines(trees$Girth, trees$Volume, col = "green")
+legend("bottomright", legend=c("Girth to Height", "Girth to Volume"), col=c("red", "green"), lty = 1)
+
+# Exercise 1.7
+genotype
+sort(genotype)
+genotype$Wt[order(genotype$Wt)]
