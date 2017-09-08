@@ -80,6 +80,10 @@ lines(trees$Girth, trees$Volume, col = "green")
 legend("bottomright", legend=c("Girth to Height", "Girth to Volume"), col=c("red", "green"), lty = 1)
 
 # Exercise 1.7
-genotype
-sort(genotype)
-genotype$Wt[order(genotype$Wt)]
+# example woth order
+a <- order(trees$Height)
+trees1 <- trees[a,]
+trees1
+
+genotype[order(genotype$Wt), ]
+genotype[order(genotype$Mother), ]
