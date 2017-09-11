@@ -87,3 +87,38 @@ trees1
 
 genotype[order(genotype$Wt), ]
 genotype[order(genotype$Mother), ]
+genotype[order(genotype$Mother, genotype$Wt), ]
+
+
+# Exercise 1.8
+# 1.8.1
+for (i in (1:10)) {
+  print(i)
+}
+
+# 1.8.2
+i = 1
+while(i <= 10) {
+  print(i)
+  i = i + 1
+}
+
+# 1.8.3 (recursion?)
+head((1:10), 10)
+(1:10)
+
+# Exercise 1.9
+# ???????????????????????????
+paste("Leo","the","lion")
+paste("a","b")
+paste("a","b", sep="#")
+paste("a","b", collapse=";;;;")
+paste(1:5)
+paste(1:5, collapse="")
+
+# Exercise 1.10
+MeanAndSd <- function (x) {
+  av <- mean(x)
+  sdev <- sd(x)
+  c(mean=av, sd=sdev)
+}
