@@ -42,7 +42,9 @@ for (row in 1:nrow(Pima.tr2)) {
   print(sprintf("[%d] -> %d", row, m))
 }
 
-# TODO: table()
+# table example
+table(colSums(is.na(Pima.tr2)))
+table(rowSums(is.na(Pima.tr2)))
 
 # Exercise 1.3
 # Exercise 1.3.1
@@ -89,32 +91,28 @@ genotype[order(genotype$Wt), ]
 genotype[order(genotype$Mother), ]
 genotype[order(genotype$Mother, genotype$Wt), ]
 
-
 # Exercise 1.8
-# 1.8.1
+# Exercise 1.8.1
 for (i in (1:10)) {
   print(i)
 }
 
-# 1.8.2
+# Exercise 1.8.2
 i = 1
 while(i <= 10) {
   print(i)
   i = i + 1
 }
 
-# 1.8.3 (recursion?)
-head((1:10), 10)
-(1:10)
+# Exercise 1.8.3
+print((1:10))
 
 # Exercise 1.9
-# ???????????????????????????
-paste("Leo","the","lion")
-paste("a","b")
-paste("a","b", sep="#")
-paste("a","b", collapse=";;;;")
-paste(1:5)
-paste(1:5, collapse="")
+# sep => separates
+# collapse => puts together (concat)
+a <- c("Leo", "the", "lion")
+paste(a, sep="_")
+paste(a, collapse="#")
 
 # Exercise 1.10
 MeanAndSd <- function (x) {
@@ -122,3 +120,61 @@ MeanAndSd <- function (x) {
   sdev <- sd(x)
   c(mean=av, sd=sdev)
 }
+
+###############################################################
+
+# Exercise 2.1
+class("a")
+library(MASS)
+data("cabbages")
+cabbages
+sapply(cabbages, class)
+dt3 <- data.frame(cabbages$HeadWt, cabbages$VitC)
+
+# Exercise 2.2
+# Notes: sapply summarizes compared to just apply
+class(dt3)
+dim(dt3)
+rownames(dt3)
+str(dt3)
+dt4 <- data.frame(DNase, cabbages)
+
+table(DNase)
+sapply(DNase, table)
+sapply(DNase$conc, mean)
+sapply(DNase$Run, class)
+
+# Exercise 2.3
+plot(rnorm(c(100)))
+plot(rnorm(sample(100)))
+
+# dev.off()
+par(mfrow=c(2,2))
+
+# Notes: the more the better
+y <- rnorm(100)
+hist(y, probability=TRUE)
+lines(density(y))
+
+y <- rnorm(25)
+hist(y, probability=TRUE)
+lines(density(y))
+
+y <- rnorm(500)
+hist(y, probability=TRUE)
+lines(density(y))
+
+# Exercise 2.4
+# Notes: replace uses the same number multiple time
+sample(c(1:5))
+sample(c(1:5), replace = T)
+
+# Exercise 2.5
+# Notes: similar to SQL: GROUP BY, but more advanced
+data("Pima.tr2")
+count.na <- function(x) sum(is.na(x))
+colSums(is.na(Pima.tr2)) # other way
+by(Pima.tr2, Pima.tr2$type, function(x) sapply(x, count.na))
+
+Pima.tr2
+complete.cases(Pima.tr2$type)
