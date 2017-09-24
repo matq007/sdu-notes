@@ -9,9 +9,9 @@ b) SELO shall also paint the sequence logo and output it to a PNG file.
 ### Install requirements
 
 Note: You have to have pip already installed for running the command below.
-`sudo pip install weblogo`
+```sudo pip install weblogo```
 
 ### Run application
 
-`python selo.py`
+```python selo.py```
 
