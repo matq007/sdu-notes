@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import numpy
+from weblogolib import *
 
 INPUT = "data.txt"
 CAPITAL_A = 65
@@ -53,10 +54,20 @@ def most_likely_word():
     return the_word
 
 
+def generate_png():
+    print 'Generating sequence logo'
+    input = open(INPUT)
+    sequence = read_seq_data(input)
+    data = LogoData.from_seqs(sequence)
+    l_format = LogoFormat(data, None)
+    with open("sequence.png", 'wb') as fout:
+        fout.write(png_formatter(data, l_format))
+
+
 if __name__ == "__main__":
     read_file()
     calculate_occurrence()
     print_data()
     print '\n'
     print 'A) Most likely word is: ' + most_likely_word()
-    print 'B) Run command: '
+    generate_png()
