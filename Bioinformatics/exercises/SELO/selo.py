@@ -42,10 +42,10 @@ def calculate_occurrence():
 
 def most_likely_word():
     the_word = ''
-    max_index = 0
-    max_value = 0
 
     for i in xrange(len(data)):
+        max_index = 0
+        max_value = 0
         for j in xrange(ALPHABET_LENGTH):
             if max_value < data[i][j]:
                 max_value = data[i][j]
