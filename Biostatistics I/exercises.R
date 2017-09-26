@@ -176,5 +176,27 @@ count.na <- function(x) sum(is.na(x))
 colSums(is.na(Pima.tr2)) # other way
 by(Pima.tr2, Pima.tr2$type, function(x) sapply(x, count.na))
 
+# Exercise 2.5.2
 Pima.tr2
-complete.cases(Pima.tr2$type)
+anymiss <- complete.cases(Pima.tr2)
+cbind(Pima.tr2, anymiss)
+
+# Exercise 2.6
+# The more values the better the results (should work like this)
+a <- rnorm(100, mean=0, sd=1)
+b <- rnorm(200, mean=0, sd=1)
+plot(density(a))
+lines(density(b), col=2)
+qqplot(a,b)
+abline(0,1)
+
+# Exercise 2.7
+# TODO
+# dev.off()
+data("mammals")
+mam.lm <- lm(log10(brain) ~ log10(body), data=mammals)
+plot(mam.lm)
+abline(mam.lm)
+coef(mam.lm)
+
+# Exercise 2.8
