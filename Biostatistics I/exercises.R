@@ -195,8 +195,28 @@ abline(0,1)
 # dev.off()
 data("mammals")
 mam.lm <- lm(log10(brain) ~ log10(body), data=mammals)
-plot(mam.lm)
 abline(mam.lm)
 coef(mam.lm)
 
 # Exercise 2.8
+# TO DO
+
+# Exercise 2.9
+# TO DO
+
+###############################################################
+
+# Exercise 3
+# Exercise 3.1.1
+x <- seq(0, 5, 0.01)
+plot(x, dnorm(x, mean = 2.5, sd = 1.5), type = "l")
+plot(x, pnorm(x, mean = 2.5, sd = 1.5), type = "l")
+
+# Exercise 3.1.2
+pnorm(4, 2.5, 1.5) - pnorm(0.5, 2.5, 1.5)
+
+# Exercise 3.1.3
+dnorm(x=2, 2.5, 1.5)
+
+# Exercise 3.2
+
