@@ -11,6 +11,39 @@ Imagine we performed at transcription factor (TF) knock-out study and identified
 Hint: The consensus sequence of the most likely motif should start with TTAGG and end with CCTAA.
 
 URL1:
-http://www.imada.sdu.dk/~jbaumbac/download/teaching/ws17- 18/DM847/exercises/bioinformatics_intro_class_de_novo_sequence_lo go_discovery_upstreams.fas
+http://www.imada.sdu.dk/~jbaumbac/download/teaching/ws17-18/DM847/exercises/bioinformatics_intro_class_de_novo_sequence_logo_discovery_upstreams.fas
 
 URL2: http://weblogo.berkeley.edu
+
+## Results
+### Sequences
+```
+atttaggtaaggttacctt
+attaggttaggctaaccta
+ttaggttaggctaacctaa
+taggttaggctaacctaag
+aggttaggctaacctaagc
+ggttaggttagcctaacct
+attaggttaggctaaccta
+ttaggttaggctaacctaa
+tgcgattaggttagcctaa
+acaattaggttaggctagc
+ccattaggttaggctaacc
+cattaggttaggctagcct
+attaggttaggctaaccta
+ttaggttaggctaacctaa
+gcagttaggttagcctaac
+caattaggttaggctaacc
+aattaggttaggctaacct
+attaggttaggctaaccta
+ttaggttaggctaacctaa
+taggttaggctaacctaag
+aggttaggctaacctaagc
+ggttaggttagcctaacct
+ccattaggttaggctaacc
+aattaggttaggctaacct
+attaggttaggctaaccta
+```
+
+### Sequence logo
+![Sequence logo](https://github.com/matq007/sdu-notes/blob/master/Bioinformatics/exercises/seqmotif/sequence-logo.png)
