@@ -90,15 +90,14 @@ def calculate_likelihood():
 
     for sequence in sequences:
 
-        motif = 0
-        after_motif = 0
-
         for i in xrange(0, len(sequence) - BS_LENGTH + 1):
             motif = calculate_motif(sequence, i, i + BS_LENGTH)
             after_motif = calculate_after_motif(sequence, i, i + BS_LENGTH)
             matrix[sequence_counter][i] = motif * after_motif
 
         sequence_counter += 1
+
+    normalize(matrix)
 
     return matrix
 
@@ -118,7 +117,6 @@ if __name__ == "__main__":
     calculate_foreground()
     build_model(init_position)
     matrix = calculate_likelihood()
-    normalize(matrix)
     pprint.pprint(matrix)
 
 
