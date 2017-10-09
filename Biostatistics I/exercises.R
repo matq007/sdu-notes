@@ -238,7 +238,26 @@ lines(density(y), col = "red")
 x <- seq(-2, 2, 0.01)
 lines(dnorm(x)~x, col = "blue")
 
-# Exercise 3.4
+# Exercise 3.4.1
+library("MASS")
+x <- seq(-10, 10, 1)
+hist(log(Animals$body), probability = T)
+lines(density(log(Animals$body)), col = "red")
+
+# Exercise 3.4.2
+lines(x, dnorm(x, sd = sd(log(Animals$body)), mean = mean(log(Animals$body))), col = "blue")
+
+# Exercise 3.5
+plot(density(rnorm(50)), type="l")
+
+
+# Exercise 3.6
+plot(density(rnorm(50), bw=0.15), type="l")
+plot(density(rnorm(50), bw=0.2), type="l")
+plot(density(rnorm(50), bw=0.6), type="l")
+plot(density(rnorm(50), bw=0.75), type="l")
+
+# Exercise 3.7
 
 
 # Exercise 3.13
@@ -251,4 +270,6 @@ acf(y1)
 acf(y)
 
 # Exercise 3.14
+
+# Exercise 4.1
 
