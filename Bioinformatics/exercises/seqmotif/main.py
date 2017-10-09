@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 import numpy
 import pprint
+import random
 
 INPUT = "bioinformatics_intro_class_de_novo_sequence_logo_discovery_upstreams.fas"
 DEBUG_INPUT = "our_data.fas"
 sequences = []
-BS_LENGTH = 4
+BS_LENGTH = 19
 
 
-def read_file():
+def read_file(input_file):
     counter = 1
-    with open(DEBUG_INPUT, 'r') as file:
+    with open(input_file, 'r') as file:
         for sequence in file:
             if counter % 2 == 0:
                 sequence = sequence.rstrip()
@@ -22,7 +23,7 @@ def read_file():
 
 def guess_random_point():
     # return random.randint(0, len(sequences[0]) - BS_LENGTH - 1)
-    return 4
+    return 0
 
 
 def calculate_background(init_position):
@@ -140,16 +141,8 @@ def recalculate_model(matrix):
     return MODEL
 
 
-def verify_model(model):
-    result = []
-
-    values = model.values()
-    for i in xrange(0, len(values[0])):
-        for j in xrange(0, len(values)):
-            if values[j][i] == 1.0:
-                result.append(True)
-
-    return len(result) == BS_LENGTH
+def verify_model(prev, model):
+    return prev == model
 
 
 def consensus_sequence(model):
@@ -163,20 +156,24 @@ def consensus_sequence(model):
 
     return result
 
+
 if __name__ == "__main__":
-    read_file()
+    read_file(INPUT)
     init_position = guess_random_point()
     background = calculate_background(init_position)
     foreground = calculate_foreground()
     model = build_model(init_position, foreground)
 
     not_good = True
+    prev = {}
     while not_good:
         matrix = calculate_likelihood(background, model)
         model = recalculate_model(matrix)
 
-        if verify_model(model):
+        if verify_model(prev, model):
             not_good = False
 
-    # pprint.pprint(model)
-    print consensus_sequence(model)
+        prev = model
+
+    pprint.pprint(model)
+    # print consensus_sequence(model)
