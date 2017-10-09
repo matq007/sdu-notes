@@ -181,3 +181,4 @@ if __name__ == "__main__":
             counter += 1
 
         print "Pos:[%d] It:[%d]: %s" % (k, counter, consensus_sequence(model))
+        # print consensus_sequence(model)
