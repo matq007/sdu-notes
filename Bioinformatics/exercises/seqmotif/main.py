@@ -22,12 +22,7 @@ def read_file(input_file):
     file.close()
 
 
-def guess_random_point():
-    return random.randint(0, len(sequences[0]) - BS_LENGTH - 1)
-    # return 0
-
-
-def calculate_background(init_position):
+def calculate_background():
     BACKGROUND = {}
     total_count = len(sequences) * len(sequences[0])
     for sequence in sequences:
@@ -151,33 +146,38 @@ def consensus_sequence(model):
 
     values = model.values()
     for i in xrange(0, len(values[0])):
+        local_max = -1
+        local_max_index = -1
         for j in xrange(0, len(values)):
-            if values[j][i] == 1.0:
-                result += model.keys()[j]
+            if local_max < values[j][i]:
+                local_max = values[j][i]
+                local_max_index = j
+
+        result += model.keys()[local_max_index]
 
     return result
 
 
 if __name__ == "__main__":
     read_file(INPUT)
-    init_position = guess_random_point()
-    background = calculate_background(init_position)
-    foreground = calculate_foreground()
-    model = build_model(init_position, foreground)
+    background = calculate_background()
 
-    not_good = True
-    prev = {}
-    counter = 0
-    while not_good:
-        matrix = calculate_likelihood(background, model)
-        model = recalculate_model(matrix)
+    for k in xrange(0, len(sequences)):
 
-        if verify_model(prev, model):
-            not_good = False
+        foreground = calculate_foreground()
+        model = build_model(k, foreground)
 
-        prev = model
-        counter += 1
+        not_good = True
+        prev = {}
+        counter = 0
+        while not_good:
+            matrix = calculate_likelihood(background, model)
+            model = recalculate_model(matrix)
 
-    print "Number of iterations: %d" % counter
-    pprint.pprint(model)
-    # print consensus_sequence(model)
+            if verify_model(prev, model):
+                not_good = False
+
+            prev = model
+            counter += 1
+
+        print "Pos:[%d] It:[%d]: %s" % (k, counter, consensus_sequence(model))
