@@ -5,12 +5,8 @@ import pprint
 INPUT = "bioinformatics_intro_class_de_novo_sequence_logo_discovery_upstreams.fas"
 DEBUG_INPUT = "our_data.fas"
 sequences = []
-ALPHABET = 4
 BS_LENGTH = 4
-BACKGROUND = {}
-FOREGROUND = {}
-MODEL = {}
-LIKELIHOOD = {}
+
 
 def read_file():
     counter = 1
@@ -30,6 +26,7 @@ def guess_random_point():
 
 
 def calculate_background(init_position):
+    BACKGROUND = {}
     total_count = len(sequences) * len(sequences[0])
     for sequence in sequences:
         for c in sequence:
@@ -41,8 +38,11 @@ def calculate_background(init_position):
     for key in BACKGROUND.keys():
         BACKGROUND[key] = round(BACKGROUND[key] / float(total_count), 2)
 
+    return BACKGROUND
+
 
 def calculate_foreground():
+    FOREGROUND = {}
     for i in xrange(0, len(sequences[0])):
         for j in xrange(0, len(sequences)):
             letter = sequences[j][i]
@@ -56,43 +56,48 @@ def calculate_foreground():
         for i in xrange(0, len(FOREGROUND[key])):
             FOREGROUND[key][i] = round(FOREGROUND[key][i] / float(len(sequences)), 2)
 
-
-def build_model(init_position):
-    for key in FOREGROUND.keys():
-        MODEL[key] = FOREGROUND[key][init_position: init_position + BS_LENGTH]
+    return FOREGROUND
 
 
-def calculate_motif(sequence, start, end):
+def build_model(init_position, foreground):
+    MODEL = {}
+    for key in foreground.keys():
+        MODEL[key] = foreground[key][init_position: init_position + BS_LENGTH]
+
+    return MODEL
+
+
+def calculate_motif(sequence, model, start, end):
     motif = 1
     index = 0
 
     for i in xrange(start, end):
         letter = sequence[i]
-        motif = MODEL[letter][index] * motif
+        motif = model[letter][index] * motif
         index += 1
 
     return motif
 
 
-def calculate_after_motif(sequence, start, end):
+def calculate_after_motif(background, sequence, start, end):
     after_motif = 1
 
     for i in xrange(0, len(sequence)):
         if i not in range(start, end):
-            after_motif = BACKGROUND[sequence[i]] * after_motif
+            after_motif = background[sequence[i]] * after_motif
 
     return after_motif
 
 
-def calculate_likelihood():
+def calculate_likelihood(background, model):
     matrix = numpy.zeros(shape=(len(sequences), len(sequences[0]) - BS_LENGTH + 1))
     sequence_counter = 0
 
     for sequence in sequences:
 
         for i in xrange(0, len(sequence) - BS_LENGTH + 1):
-            motif = calculate_motif(sequence, i, i + BS_LENGTH)
-            after_motif = calculate_after_motif(sequence, i, i + BS_LENGTH)
+            motif = calculate_motif(sequence, model, i, i + BS_LENGTH)
+            after_motif = calculate_after_motif(background, sequence, i, i + BS_LENGTH)
             matrix[sequence_counter][i] = motif * after_motif
 
         sequence_counter += 1
@@ -110,16 +115,56 @@ def normalize(matrix):
         j += 1
 
 
+def recalculate_model(matrix):
+    RECALCULATED_SEQ_PROB = []
+    RECALCULATED_SEQ = []
+
+    for i in xrange(0, len(matrix)):
+        for j in xrange(0, len(matrix[0])):
+            if matrix[i][j] > 0:
+                RECALCULATED_SEQ_PROB.append(round(matrix[i][j], 2))
+                RECALCULATED_SEQ.append(sequences[i][j: j + BS_LENGTH])
+
+    MODEL = {}
+    for i in xrange(0, len(RECALCULATED_SEQ[0])):
+        for j in xrange(0, len(RECALCULATED_SEQ)):
+            letter = RECALCULATED_SEQ[j][i]
+            if letter not in MODEL:
+                MODEL[letter] = numpy.zeros(BS_LENGTH)
+
+            MODEL[letter][i] += RECALCULATED_SEQ_PROB[j]
+
+    for key in MODEL.keys():
+        MODEL.update({key: list(map((lambda x: round(x / len(sequences), 2)), MODEL[key]))})
+
+    return MODEL
+
+
+def verify_model(model):
+    result = []
+
+    values = model.values()
+    for i in xrange(0, len(values[0])):
+        for j in xrange(0, len(values)):
+            if values[j][i] == 1.0:
+                result.append(True)
+
+    return len(result) == BS_LENGTH
+
+
 if __name__ == "__main__":
     read_file()
     init_position = guess_random_point()
-    calculate_background(init_position)
-    calculate_foreground()
-    build_model(init_position)
-    matrix = calculate_likelihood()
-    pprint.pprint(matrix)
+    background = calculate_background(init_position)
+    foreground = calculate_foreground()
+    model = build_model(init_position, foreground)
 
+    not_good = True
+    while not_good:
+        matrix = calculate_likelihood(background, model)
+        model = recalculate_model(matrix)
 
+        if verify_model(model):
+            not_good = False
 
-
-
+    pprint.pprint(model)
