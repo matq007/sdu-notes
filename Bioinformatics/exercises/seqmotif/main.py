@@ -152,6 +152,17 @@ def verify_model(model):
     return len(result) == BS_LENGTH
 
 
+def consensus_sequence(model):
+    result = ""
+
+    values = model.values()
+    for i in xrange(0, len(values[0])):
+        for j in xrange(0, len(values)):
+            if values[j][i] == 1.0:
+                result += model.keys()[j]
+
+    return result
+
 if __name__ == "__main__":
     read_file()
     init_position = guess_random_point()
@@ -167,4 +178,5 @@ if __name__ == "__main__":
         if verify_model(model):
             not_good = False
 
-    pprint.pprint(model)
+    # pprint.pprint(model)
+    print consensus_sequence(model)
