@@ -219,4 +219,36 @@ pnorm(4, 2.5, 1.5) - pnorm(0.5, 2.5, 1.5)
 dnorm(x=2, 2.5, 1.5)
 
 # Exercise 3.2
+x <- seq(-5, 5, 0.01)
+plot(x, dt(x, df = 3))
+lines(x, dnorm(x), type = "l")
+
+plot(x, pt(x, df = 3))
+lines(x, dnorm(x), type = "l")
+
+# Exercise 3.3
+x <- seq(0, 25, 1)
+y <- rnorm(x, mean = 0, sd = 1.0)
+hist(y, probability = TRUE)
+
+# Exercise 3.3 a)
+lines(density(y), col = "red")
+
+# Exercise 3.3 b) 
+x <- seq(-2, 2, 0.01)
+lines(dnorm(x)~x, col = "blue")
+
+# Exercise 3.4
+
+
+# Exercise 3.13
+y1 <- rnorm(51)
+y <- y1[-1] + y1[-51]
+par(mfrow=c(1,2))
+y1
+y
+acf(y1)
+acf(y)
+
+# Exercise 3.14
 
