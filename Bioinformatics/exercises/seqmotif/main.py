@@ -7,6 +7,7 @@ INPUT = "bioinformatics_intro_class_de_novo_sequence_logo_discovery_upstreams.fa
 DEBUG_INPUT = "our_data.fas"
 sequences = []
 BS_LENGTH = 19
+DECIMAL_CIFERS = 5
 
 
 def read_file(input_file):
@@ -22,8 +23,8 @@ def read_file(input_file):
 
 
 def guess_random_point():
-    # return random.randint(0, len(sequences[0]) - BS_LENGTH - 1)
-    return 0
+    return random.randint(0, len(sequences[0]) - BS_LENGTH - 1)
+    # return 0
 
 
 def calculate_background(init_position):
@@ -37,7 +38,7 @@ def calculate_background(init_position):
                 BACKGROUND[c] = 1
 
     for key in BACKGROUND.keys():
-        BACKGROUND[key] = round(BACKGROUND[key] / float(total_count), 2)
+        BACKGROUND[key] = round(BACKGROUND[key] / float(total_count), DECIMAL_CIFERS)
 
     return BACKGROUND
 
@@ -55,7 +56,7 @@ def calculate_foreground():
 
     for key in FOREGROUND.keys():
         for i in xrange(0, len(FOREGROUND[key])):
-            FOREGROUND[key][i] = round(FOREGROUND[key][i] / float(len(sequences)), 2)
+            FOREGROUND[key][i] = round(FOREGROUND[key][i] / float(len(sequences)), DECIMAL_CIFERS)
 
     return FOREGROUND
 
@@ -112,7 +113,7 @@ def normalize(matrix):
 
     j = 0
     for row in matrix:
-        matrix[j] = [round(float(i)/sum(row), 2) for i in row]
+        matrix[j] = [round(float(i)/sum(row), DECIMAL_CIFERS) for i in row]
         j += 1
 
 
@@ -123,7 +124,7 @@ def recalculate_model(matrix):
     for i in xrange(0, len(matrix)):
         for j in xrange(0, len(matrix[0])):
             if matrix[i][j] > 0:
-                RECALCULATED_SEQ_PROB.append(round(matrix[i][j], 2))
+                RECALCULATED_SEQ_PROB.append(round(matrix[i][j], DECIMAL_CIFERS))
                 RECALCULATED_SEQ.append(sequences[i][j: j + BS_LENGTH])
 
     MODEL = {}
@@ -136,7 +137,7 @@ def recalculate_model(matrix):
             MODEL[letter][i] += RECALCULATED_SEQ_PROB[j]
 
     for key in MODEL.keys():
-        MODEL.update({key: list(map((lambda x: round(x / len(sequences), 2)), MODEL[key]))})
+        MODEL.update({key: list(map((lambda x: round(x / len(sequences), DECIMAL_CIFERS)), MODEL[key]))})
 
     return MODEL
 
