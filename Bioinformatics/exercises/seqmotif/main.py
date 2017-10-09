@@ -167,6 +167,7 @@ if __name__ == "__main__":
 
     not_good = True
     prev = {}
+    counter = 0
     while not_good:
         matrix = calculate_likelihood(background, model)
         model = recalculate_model(matrix)
@@ -175,6 +176,8 @@ if __name__ == "__main__":
             not_good = False
 
         prev = model
+        counter += 1
 
+    print "Number of iterations: %d" % counter
     pprint.pprint(model)
     # print consensus_sequence(model)
