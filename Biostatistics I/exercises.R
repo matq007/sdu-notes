@@ -258,6 +258,45 @@ plot(density(rnorm(50), bw=0.6), type="l")
 plot(density(rnorm(50), bw=0.75), type="l")
 
 # Exercise 3.7
+library("MASS")
+sample(1:5, replace=T)
+for (i in 1:10) print(sample(1:5, replace=T))
+plot(density(log10(Animals$body)))
+lines(density(sample(log10(Animals$body), replace=T)), col="red")
+lines(density(sample(log10(Animals$body), replace=T)), col="blue")
+lines(density(sample(log10(Animals$body), replace=T)), col="green")
+lines(density(sample(log10(Animals$body), replace=T)), col="yellow")
+lines(density(sample(log10(Animals$body), replace=T)), col="purple")
+lines(density(sample(log10(Animals$body), replace=T)), col="brown")
+
+# Exercise 3.8
+qqnorm(rnorm(10))
+qqnorm(rnorm(15))
+qqnorm(rnorm(200))
+
+x <- seq(-10, 10, 0.01)
+plot(x, dnorm(x))
+qqnorm(dnorm(x))
+
+# Exercise 3.9
+# Logarith is normally distributed
+qqnorm(lh)
+qqnorm(log(lh))
+qqnorm(Animals$body)
+qqnorm(log(Animals$body))
+
+boxplot(log(lh))
+boxplot(log(Animals$body))
+
+# Exercise 3.10
+y <- rnorm(100)
+plot(density(y), type="l")
+av <- numeric(100)
+for (i in 1:100) {
+  av[i] <- mean(rnorm(4))
+}
+lines(density(av), col=2)
+
 
 
 # Exercise 3.13
