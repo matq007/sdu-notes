@@ -2,6 +2,7 @@
 import pprint
 import numpy
 import operator
+from matplotlib import pyplot
 
 INPUT = "input.txt"
 K = 5
@@ -119,6 +120,18 @@ def find_pair(p_reverse, i, p_range):
         find_pair(p_reverse, i, 200)
 
     return i, endpoint
+
+
+def print_graph(p_strands):
+    x = p_strands[0]
+    y = p_strands[1]
+
+    bins = numpy.linspace(0, len(p_strands[0]), 100)
+
+    pyplot.hist(x, bins, alpha=0.5, label='forward')
+    pyplot.hist(y, bins, alpha=0.5, label='reverse')
+    pyplot.legend(loc='upper right')
+    pyplot.show()
 
 
 if __name__ == "__main__":
