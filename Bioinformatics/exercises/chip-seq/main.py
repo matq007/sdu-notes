@@ -21,11 +21,11 @@ def read_file():
 
             if len(line) > 1:
                 if read_symbol == "+":
-                    forward[start_position] += 1
-                    forward[end_position] += 1
+                    for i in xrange(start_position, end_position + 1):
+                        forward[i] += 1
                 if read_symbol == "-":
-                    reverse[start_position] += 1
-                    reverse[end_position] += 1
+                    for i in xrange(start_position, end_position + 1):
+                        reverse[i] += 1
 
     file.close()
     return forward, reverse
