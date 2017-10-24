@@ -123,14 +123,15 @@ def find_pair(p_reverse, i, p_range):
 
 
 def print_graph(p_strands):
-    x = p_strands[0]
-    y = p_strands[1]
+    x = range(len(p_strands[0]))
+    y = p_strands[0]
+    y2 = p_strands[1] * (-1)
 
-    bins = numpy.linspace(0, len(p_strands[0]), 100)
+    fig, ax = pyplot.subplots()
+    pyplot.fill(x, y, '-', linewidth=2, label='Forward strand', color='b')
+    pyplot.fill(x, y2, '-', linewidth=2, label='Reverse strand', color='r')
 
-    pyplot.hist(x, bins, alpha=0.5, label='forward')
-    pyplot.hist(y, bins, alpha=0.5, label='reverse')
-    pyplot.legend(loc='upper right')
+    pyplot.yticks([])
     pyplot.show()
 
 
@@ -141,4 +142,4 @@ if __name__ == "__main__":
     smooth(strands)
     maximas = get_local_maxima(strands)
     get_result(maximas)
-    # pprint.pprint(maximas)
+    print_graph(strands)
