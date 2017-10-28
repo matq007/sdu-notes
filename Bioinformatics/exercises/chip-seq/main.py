@@ -90,11 +90,15 @@ def get_result(p_maximas):
 
     forward = p_maximas[0]
     reverse = p_maximas[1]
+    results = []
 
     for i in range(0, len(forward)):
         if forward[i] > 0:
             pair = find_pair(reverse, i, 120)
+            results.append(pair)
             print "%d #### %d" % (pair[0], pair[1])
+
+    return results
 
 
 def find_pair(p_reverse, i, p_range):
@@ -122,7 +126,7 @@ def find_pair(p_reverse, i, p_range):
     return i, endpoint
 
 
-def print_graph(p_strands):
+def print_graph(p_strands, p_results):
     x = range(len(p_strands[0]))
     y = p_strands[0]
     y2 = p_strands[1] * (-1)
@@ -130,6 +134,12 @@ def print_graph(p_strands):
     fig, ax = pyplot.subplots()
     pyplot.fill(x, y, '-', linewidth=2, label='Forward strand', color='b')
     pyplot.fill(x, y2, '-', linewidth=2, label='Reverse strand', color='r')
+
+    for pair in p_results:
+        if pair[0] < pair[1]:
+            pyplot.axvspan(pair[0], pair[1], color='g', alpha=0.5)
+        else:
+            pyplot.axvspan(pair[1], pair[0], color='g', alpha=0.5)
 
     pyplot.yticks([])
     pyplot.show()
@@ -141,5 +151,5 @@ if __name__ == "__main__":
     strands = read_file()
     smooth(strands)
     maximas = get_local_maxima(strands)
-    get_result(maximas)
-    print_graph(strands)
+    results = get_result(maximas)
+    print_graph(strands, results)
