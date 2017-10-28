@@ -47,4 +47,4 @@ and highlights the binding site regions.
 ```
 
 ### Image
-![CHIP-SEQ analysis](https://github.com/matq007/sdu-notes/tree/master/Bioinformatics/exercises/chip-seq/chip=seq=img.png)
+![CHIP-SEQ analysis](https://github.com/matq007/sdu-notes/blob/master/Bioinformatics/exercises/chip-seq/chip-seq-img.png)
